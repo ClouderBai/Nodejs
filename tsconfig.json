@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "removeComments": true,
+        "strict": true,
+        "strictNullChecks": false,
+        "noImplicitAny": false,
+        "strictPropertyInitialization": false,
+        "baseUrl": "src",
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "sourceMap": false
+    },
+    // "include": ["./src/"],
+    "exclude": ["node_modules", "dist", "log"],
+    "ts-node":{
+        "transpileOnly": true
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "dev": {
+        "version": 7,
+        "relasedate": "20210909",
+        "cluster": "cmds-dev-cluster",
+        "service": "cmdsadmin-dev-service",
+        "taskDefinitionName": "cmdsadmin-dev-task",
+        "WORK_DIR": "D:/project/LillyData/deploy-dev",
+        "WORK_DIR_DIST": "D:/project/LillyData/deploy-dev/dist",
+        "BUILD_DIR": "D:/project/LillyData/source/dist"
+    },
+    "qa": {
+        "version": 1,
+        "relasedate": "20210914",
+        "cluster": "cmdsadmin-qa-cluster",
+        "service": "cmdsadmin-qa-service",
+        "taskDefinitionName": "cmdsadmin-qa-task",
+        "WORK_DIR": "D:/project/LillyData/deploy-qa",
+        "WORK_DIR_DIST": "D:/project/LillyData/deploy-qa/dist",
+        "BUILD_DIR": "D:/project/LillyData/source/dist"
+    },
+    "version": 2
+}
