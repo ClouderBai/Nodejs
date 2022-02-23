@@ -2,14 +2,15 @@ import { plainToClass } from 'class-transformer'
 import fsx from 'fs-extra'
 import fs from 'fs'
 import _ from 'lodash'
-import { fetchHcpByHcpId, fetchHcoByEntityId } from '../../api/veeva'
+import { fetchHcpByHcpId, fetchHcoByEntityId, fetchHcpByEntityId } from '../../api/veeva'
 import { createConnection } from 'typeorm'
 import { MHcoEntity, MHcpEntity, MSrcHcoEntity, MSrcRefHcpHcoEntity } from './entities'
 import * as Entities from './entities'
 import { MSrcHcoModel } from './model'
 import { MSrcHcpModel } from './model/m-src-hcp.model'
 import * as SQL from './sql'
-import moment from 'moment'
+import moment, { suppressDeprecationWarnings } from 'moment'
+import { resolve } from 'path'
 
 
 
@@ -153,32 +154,39 @@ class Hco {
 
 
 class Hcp extends DataSource {
-    constructor() {
-        super();
-    }
+    private _idsPath;
+    private _dataType;
+    private _requestFunction;
+    private _jsonfile;
+
+    constructor() { super(); }
+
+    useConfiguration(config) { Object.assign(this, config); }
+    setIdsPath(idsPath: string) { this._idsPath = idsPath; }
+    setDataType(type: string) { this._dataType = type; }
+    setRequestFunction(requestFunction) { this._requestFunction = requestFunction; }
     /**
      * fetch veeva hcp data
      */
     async fetchHcpData() {
         const conn = await this.getConnection()
-
-        const vnEntityIds = fs.readFileSync('./src/hco_hcp/static/vn_entity_id')
+        const sqlResult = await conn.manager.query(`SELECT MAX(versionnumber) FROM cmd_owner.veeva_hcp`)
+        const { max: versionNumber } = sqlResult || {}
+        // const vnEntityIds = fs.readFileSync('./src/hco_hcp/static/hcp/vn_entity_id')
+        const vnEntityIds = fs.readFileSync(this._idsPath)
             .toString()
             .replace(/\r|\n/g, '')
             .split(',')
         console.log('----------vnEntityIds-------------', vnEntityIds.length)
-        // list already exist in hco directory
-        const fileNameExist = fsx.readdirSync('./src/hco_hcp/static/source')
-        // filter vnEntityId
-        const vnEntityIdsFiltered = _.filter(vnEntityIds, (vnEntityId) => !fileNameExist.includes(`${vnEntityId}.json`))
-        // const vnEntityIdsFiltered = vnEntityIds
         // split into chunk
-        const chunks = _.chunk(vnEntityIdsFiltered, 20)
+        const chunks = _.chunk(vnEntityIds, 20)
 
         for (const it of chunks) {
             // promise
             const promiseArr = it.reduce((promises, entityId) => {
-                const item = fetchHcpByHcpId(entityId)
+                // const item = fetchHcpByHcpId(entityId)
+                // const item = fetchHcpByEntityId(entityId)
+                const item = this._requestFunction(entityId)
                 promises.push(item)
                 return promises
             }, [])
@@ -188,12 +196,18 @@ class Hcp extends DataSource {
             for (const res of response) {
                 if(res.responseStatus == 'SUCCESS' && res.entities && res.entities.length === 1) {
                     const entity = res.entities[0]
+                    if(this._jsonfile) fsx.writeJsonSync(`${this._jsonfile}/${entity.entityId}.json`, entity)
                     await conn.manager.save(Object.assign(new Entities.VeevaHcpEntity(), {
                         vnEntityId: entity.entityId,
-                        veevaData: entity
+                        veevaData: entity,
+                        versionNumber
                     }))
+                } else if (res.responseStatus == 'SUCCESS' && !res.entities) {
+                    const index = response.findIndex(v => v == res)
+                    const entityId = it[index]
+                    if(this._jsonfile) fsx.writeJsonSync(`${this._jsonfile}/${entityId}.json`, {data: `not exist ${entityId}`})
                 } else {
-                    throw new Error(`${it.toString()} Get Error: response error`)
+                    throw res
                 }
             }
             console.log(`finish item ${it.toString()}`)
@@ -276,12 +290,19 @@ enum HcpClassificationCodeEnums {
 
 
 
+const configration = {
+    _idsPath: resolve(__dirname, './static/hcp/hcp_id'),
+    _dataType: 'HCP',
+    _requestFunction: fetchHcpByHcpId,
+    _jsonfile: resolve(__dirname, './static/hcp_json_data'),
+}
+
 
 export const main = async () => {
     // await fetchHcoData()
     // await transformHco()
-    
     const hcp = new Hcp()
-    // await fetchHcpData()
-    await hcp.transformHcp()
+    hcp.useConfiguration(configration)
+    await hcp.fetchHcpData()
+    // await hcp.transformHcp()
 }

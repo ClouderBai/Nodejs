@@ -38,9 +38,6 @@ const fetchHcoDate = async () => {
             if(res.responseStatus == 'SUCCESS' && res.entities && res.entities.length > 0) {
                 const entities = res.entities
                 fsx.writeJsonSync(`./static/hcp/source/${entities[0].entityId}.json`, res)
-            } else if (res.responseStatus == 'FAILURE' && res.errors && res.errors.length > 0 && res.errors[0].message.includes('No entity found with the given Id Network:Entity:')) {
-                const errorEntityId = res.errors[0].message.replace('No entity found with the given Id Network:Entity:', '')
-                fsx.writeJsonSync(`./static/hcp/hco_error/${errorEntityId}.json`, res.errors)
             } else {
                 throw new Error(`${it.toString()} Get Error: response error`)
             }
