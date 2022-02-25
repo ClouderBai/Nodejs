@@ -1,9 +1,5 @@
-import dotenv from 'dotenv';
-import { request } from './common/request';
 import { main } from './src/hco_hcp'
-
-
-dotenv.config({ debug: true })
+import 'dotenv/config'
 
 
 const fn = async() => {
@@ -12,7 +8,8 @@ const fn = async() => {
         await main()
         console.log('------------------------done------------------------')
     } catch (err) {
-        console.log('------------------------err------------------------', err)
+        console.log('------------------------err------------------------')
+        console.error(err)
     }
 }
 

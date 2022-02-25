@@ -1,5 +1,14 @@
 import { request } from '../common/request'
 
+
+export const fetchSessionId = () => {
+    const { VEEVA_USERNAME, VEEVA_PASSWORD } = process.env;
+    return request({
+        url: `/api/v6.0/auth?username=${VEEVA_USERNAME}&password=${VEEVA_PASSWORD}`,
+        method: 'GET',
+    })
+}
+
 export const fetchHcoByEntityId = (entityId) => {
     return request({
         url: `/api/v16.0/hcos/Network:Entity:${entityId}`,
@@ -28,11 +37,11 @@ export const fetchHcpByHcpId = (hcpid) => {
     })
 }
 
-export const fetchHcpFile = () => {
-    return request({
-        url: `/api/v21.0/artifact/job/573870/hcp_0000.csv`,
-        method: 'GET',
-        requestType: 'blob'
-    })
-}
+// export const fetchHcpFile = () => {
+//     return request({
+//         url: `/api/v21.0/artifact/job/573870/hcp_0000.csv`,
+//         method: 'GET',
+//         requestType: 'blob'
+//     })
+// }
 

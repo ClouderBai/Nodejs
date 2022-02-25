@@ -28,7 +28,7 @@ export const main = async() => {
             host: 'smtp.office365.com',
             port: 587,
             auth: {
-                user: 'AMCH05993@elililly.onmicrosoft.com',
+                user: process.env.EMAIL_USERNAME,
                 pass: ''
             }
         });
