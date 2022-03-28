@@ -112,6 +112,9 @@ export class MSrcHcoModel {
     @Expose()
     public prvncCd: string;
 
+    @Expose({ name: 'record_state__v' })
+    rcrdStateCd: string;
+
     setAddress() {
         if (this.addresses && this.addresses.length > 0) {
             const address = _.find(this.addresses, (item: any) => {

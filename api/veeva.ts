@@ -4,8 +4,8 @@ import { request } from '../common/request'
 export const fetchSessionId = () => {
     const { VEEVA_USERNAME, VEEVA_PASSWORD } = process.env;
     return request({
-        url: `/api/v6.0/auth?username=${VEEVA_USERNAME}&password=${VEEVA_PASSWORD}`,
-        method: 'GET',
+        url: `/api/v16.0/auth?username=${VEEVA_USERNAME}&password=${VEEVA_PASSWORD}`,
+        method: 'POST',
     })
 }
 

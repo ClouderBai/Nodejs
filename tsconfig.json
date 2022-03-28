@@ -1,8 +1,7 @@
 {
     "compilerOptions": {
-        "target": "es6",
-        "module": "CommonJS",
-        "moduleResolution": "node",
+        "target": "ES6",
+        "module": "commonjs",
         "outDir": "dist",
         "removeComments": true,
         "strict": true,
@@ -15,7 +14,7 @@
         "emitDecoratorMetadata": true,
         "sourceMap": false
     },
-    // "include": ["./src/"],
+    "include": ["src"],
     "exclude": ["node_modules", "dist", "log"],
     "ts-node":{
         "transpileOnly": true

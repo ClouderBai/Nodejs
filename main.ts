@@ -1,6 +1,7 @@
 import { main } from './src/hco_hcp'
 import 'dotenv/config'
-
+import dotenv from 'dotenv'
+// dotenv.config({ debug: true })
 
 const fn = async() => {
     try {

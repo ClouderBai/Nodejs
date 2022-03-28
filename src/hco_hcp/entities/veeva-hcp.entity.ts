@@ -9,8 +9,8 @@ export class VeevaHcpEntity extends BaseEntity{
     @Column('varchar', { name: 'vn_entity_id', length: 200, nullable: true })
     public vnEntityId: string;
 
-    @Column('varchar', { name: 'veeva_data', length: 100, nullable: false })
-    public veevaData: JSON;
+    @Column('varchar', { name: 'json_data', length: 100, nullable: false })
+    public jsonData: JSON;
 
     constructor(model?: any) {
         super();

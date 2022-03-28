@@ -73,6 +73,9 @@ export class MSrcHcpModel {
     @Expose()
     licenseCd: string;
 
+    @Expose({ name: 'record_state__v' })
+    rcrdStateCd: string;
+
     setLicenses() {
         if (this.licenses && this.licenses.length > 0) {
             const license = _.find(this.licenses, (item: any) => {
