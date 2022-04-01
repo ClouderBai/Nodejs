@@ -107,6 +107,10 @@ export class MSrcHcoEntity extends BaseEntity {
 
     @Column('varchar', { name: 'prvnc_cd', length: 40, nullable: true })
     public prvncCd: string;
+    
+    prvncName: any;
+    cityCd: any;
+    cntyCd: any;
 
     constructor(msrcHcoModel: MSrcHcoModel) {
         super();

@@ -1,4 +1,4 @@
-import { main } from './src/hco_hcp'
+import { main } from './src/repository'
 import 'dotenv/config'
 import dotenv from 'dotenv'
 // dotenv.config({ debug: true })

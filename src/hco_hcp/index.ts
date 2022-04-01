@@ -52,7 +52,7 @@ class DataSource {
     private _jsonfile;
     public requestFunction;
     private _dataType: TypeEnum;
-    private connectionManager = getConnectionManager();
+    private connectionManager: ConnectionManager;
     private _RequestMap = {
         [TypeEnum.HCPID]: fetchHcpByHcpId,
         [TypeEnum.HCPVEEVA]: fetchHcpByEntityId,
@@ -60,16 +60,16 @@ class DataSource {
         [TypeEnum.HCOVEEVA]: fetchHcoByEntityId,
     }
 
+    constructor() {
+        this.connectionManager = getConnectionManager();
+    }
+
     async getConnection() {
         if(this._connection) return this._connection;
         let connection: Connection;
         const hasConnection = this.connectionManager.has('default');
-        if (hasConnection) {
-            connection = this.connectionManager.get('default');
-            if (!connection.isConnected) return await connection.connect();
-            console.log('return await connection.connect();')
-        }
-        if(connection) return connection;
+        if (hasConnection) connection = this.connectionManager.get('default');
+        if (!connection.isConnected) return await connection.connect();
 
         const conn = await createConnection({
             name: 'default',
