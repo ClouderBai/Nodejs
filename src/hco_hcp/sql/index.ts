@@ -13,9 +13,24 @@ export const SrcRef2RefSQL = `
             AND cd.code=src.afltn_role_cd
     )`;
 
+
+export const SrcRef2MissHco = `
+        SELECT DISTINCT
+            hco_vn_entity_id
+        FROM        cmd_owner.m_src_ref_hcp_hco     src
+        LEFT JOIN   cmd_owner.m_src_hcp             srchcp          ON  srchcp.id=src.hcp_id
+        LEFT JOIN   cmd_owner.m_hco                 hco             ON  hco.vn_entity_id=src.hco_vn_entity_id
+        LEFT JOIN   cmd_owner.m_base_code           cd              ON  cd.base_ctgry_id=(SELECT base_code_ctgry_id FROM cmd_owner.m_base_code_ctgry WHERE ctgry_englsh_name='AffiliationRole')
+                                                                        AND cd.code=src.afltn_role_cd
+        WHERE hco.hco_id IS NULL
+`
+
+
+
 export const SrcDeleteData = `
     DELETE FROM cmd_owner.m_src_ref_hcp_hco;
     DELETE FROM cmd_owner.m_src_hcp;
+    TRUNCATE cmd_owner.m_ref_hcp_hco;
     TRUNCATE cmd_owner.m_src_hco;
 `
 

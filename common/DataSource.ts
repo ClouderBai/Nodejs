@@ -3,7 +3,7 @@ import { createConnection, Entity } from "typeorm";
 export class DataSource {
     private _connection;
 
-    private _Entities: Function[];
+    public Entities: Function[];
 
     async getConnection() {
         if(this._connection) return this._connection;
@@ -16,13 +16,13 @@ export class DataSource {
             "port": 5432,
             "username": "postgres",
             "password": "Win2008",
-            "entities": Object.values(this._Entities),
+            "entities": Object.values(this.Entities),
         })
         this._connection = conn;
         return conn
     }
 
-    setEntity(entities) { this._Entities = entities }
+    setEntity(entities) { this.Entities = entities }
 }
 
 function Entities(Entities: any): (string | Function | import("typeorm").EntitySchema<any>)[] {

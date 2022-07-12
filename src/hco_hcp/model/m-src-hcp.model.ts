@@ -9,7 +9,7 @@ export class MSrcHcpModel {
     vnEntityId: string;
 
     @Expose({ name: 'lilly_hcp_id__c' })
-    @Transform((value) => (value ? Number(value.value.match(/CN-(\S*?)HCP/)[1]) : null))
+    @Transform((value) => (value ? Number(value.match(/CN-(\S*?)HCP/)[1]) : null))
     hcpId: string;
 
     @Expose({ name: 'first_name__v' })
@@ -37,7 +37,7 @@ export class MSrcHcpModel {
     profCd: string;
 
     @Expose({ name: 'created_date__v' })
-    @Transform((value) => new Date(value.value), { toClassOnly: true })
+    @Transform((value) => new Date(value), { toClassOnly: true })
     crtDt: Date;
 
     @Expose()
@@ -45,7 +45,7 @@ export class MSrcHcpModel {
     crtUser: string;
 
     @Expose({ name: 'modified_date__v' })
-    @Transform((value) => (value ? moment(value.value).toDate() : null))
+    @Transform((value) => (value ? moment(value).toDate() : null))
     updtDt: Date;
 
     @Expose()

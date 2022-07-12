@@ -8,7 +8,7 @@ import _ from 'lodash'
 @Exclude()
 export class MSrcHcoModel {
     @Expose({ name: 'lilly_hco_id__c' })
-    @Transform((value) => (value ? Number(value.value.match(/CN-(\S*?)HCO/)[1]) : null))
+    @Transform((value) => (value ? Number(value.match(/CN-(\S*?)HCO/)[1]) : null))
     public hcoId: number;
 
     @Expose()
@@ -23,8 +23,8 @@ export class MSrcHcoModel {
     @Expose({ name: 'alternate_name_1__v' })
     public hcoDesc: string;
 
-    @Expose({ name: 'lilly_hco_id__c' })
-    @Transform((value) => (value ? value.value.match(/CN-(\S*?)HCO/)[1] : null))
+    @Expose()
+    @Transform((value, obj, type) => obj['lilly_hco_id__c'])
     public hcoCd: string;
 
     @Expose({ name: 'hco_type__v' })
@@ -88,7 +88,7 @@ export class MSrcHcoModel {
     public clsfctnCd: string;
 
     @Expose({ name: 'created_date__v' })
-    @Transform((value) => new Date(value.value), { toClassOnly: true })
+    @Transform((value) => new Date(value), { toClassOnly: true })
     crtDt: Date;
 
     @Expose()
@@ -96,7 +96,7 @@ export class MSrcHcoModel {
     crtUser: string;
 
     @Expose({ name: 'modified_date__v' })
-    @Transform((value) => (value ? moment(value.value).toDate() : null))
+    @Transform((value) => (value ? moment(value).toDate() : null))
     updtDt: Date;
 
     @Expose()

@@ -37,11 +37,5 @@ export const fetchHcpByHcpId = (hcpid) => {
     })
 }
 
-// export const fetchHcpFile = () => {
-//     return request({
-//         url: `/api/v21.0/artifact/job/573870/hcp_0000.csv`,
-//         method: 'GET',
-//         requestType: 'blob'
-//     })
-// }
+
 

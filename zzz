@@ -1,0 +1,19 @@
+No.	Mei Tuan API	Description
+1	/api/cost/create	创建成本中心
+2	/api/cost/createEntCostBind	创建绑定关系
+3	/api/cost/delete	删除成本中心
+4	/api/cost/deleteEntCostBind	删除绑定
+5	/api/cost/update	更新成本中心
+6	/api/tag/addStaffToTag	添加人到角色
+7	/api/tag/addTag	创建角色到角色组
+8	/api/tag/deleteStaffToTag	从角色删除人员
+9	/api/tag/deleteTag	删除角色
+10	/api/tag/getTagsByGroupId	查询当前角色组下的角色
+11	/api/tag/modifTag	修改角色
+12	/openapi/org/addOrg	添加部门
+13	/openapi/org/delOrg	删除部门
+14	/openapi/org/updateOrg	更新部门
+15	/openapi/staffInfo/addStaff	批量添加员工到商企通
+16	/openapi/staffInfo/deleteStaff	批量删除员工
+17	/openapi/staffInfo/updateStaff	批量更新员工到商企通
+18	/openapi/staffOrg/adjustStaffIntoOrg	将员工绑定部门
