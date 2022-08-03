@@ -11,8 +11,7 @@ import { MSrcHcpModel } from './model/m-src-hcp.model'
 import * as SQL from './sql'
 import moment from 'moment'
 import { resolve } from 'path'
-import dotenv from 'dotenv'
-// dotenv.config({ debug: true })
+import 'dotenv/config'
 
 
 /**
@@ -191,17 +190,20 @@ export const main = async () => {
     // await dataSource.fetchData();
     
     // const res = await fetchDataByUrl()
-
     // const res = await fetchDataByIds()
 
-    const hco = new Hco()
-    await hco.transformHco({ version: 4 })
+    // const hco = new Hco()
+    // await hco.transformHco({ version: 4 })
 
-    // const hcp = new Hcp()
-    // await hcp.transformHcp({ version: 3 })
-    // for (const it of hco.entities) {
-    //     const mSrcHco = plainToClass(MSrcHcoModel, it.entity);
-    //     mSrcHco
-    // }
-
+    const hcp = new Hcp()
+    await hcp.transformHcp({ version: 8 })
 }
+
+
+main()
+    .then((res) => {
+        console.log('----------res-------------', res)
+    })
+    .catch((err) => {
+        console.log('----------err-------------', err)
+    })
